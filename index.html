@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vivaan Signature | Bill System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Vivaan Signature | Shahi Kolhapuri Bill System</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     }
+
     body {
       background: #f3efe7;
       padding: 2rem 1.5rem;
@@ -19,14 +20,18 @@
       align-items: center;
       min-height: 100vh;
     }
+
     .bill-container {
-      max-width: 860px;
+      max-width: 960px;
       width: 100%;
       background: white;
       border-radius: 32px;
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
       overflow: hidden;
+      transition: all 0.2s;
     }
+
+    /* header */
     .brand-header {
       background: #8b2c1d;
       padding: 1.2rem 2rem;
@@ -35,12 +40,15 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
+      border-bottom: 3px solid #e0b354;
     }
+
     .logo-area {
       display: flex;
       align-items: center;
       gap: 1rem;
     }
+
     .logo-img {
       height: 60px;
       width: auto;
@@ -50,14 +58,21 @@
       border-radius: 12px;
       padding: 5px;
     }
+
     .brand-text h1 {
       font-size: 1.8rem;
+      letter-spacing: 1px;
       color: #ffefcf;
+      font-weight: 600;
     }
+
     .brand-text p {
       color: #fad98b;
       font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
     }
+
     .signature-badge {
       background: #e6c38a;
       padding: 0.4rem 1rem;
@@ -65,147 +80,234 @@
       color: #4a251b;
       font-weight: bold;
     }
+
     .bill-body {
-      padding: 2rem;
+      padding: 2rem 2rem 1.5rem;
     }
+
+    /* product card */
     .product-section {
       background: #fefaf5;
       border-radius: 24px;
-      padding: 1rem 1.5rem;
+      padding: 1.5rem;
       margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
       border: 1px solid #f0e2d0;
     }
+
     .product-title {
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 1.3rem;
+      font-weight: 800;
       color: #5c2a1e;
       border-left: 5px solid #e0b354;
-      padding-left: 12px;
-      margin-bottom: 1rem;
-    }
-    .product-details {
+      padding-left: 15px;
+      margin-bottom: 1.5rem;
       display: flex;
+      align-items: baseline;
       flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
+      gap: 10px;
     }
-    .info-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 28px;
-      flex: 2;
-    }
-    .info-label {
+
+    .badge-pure {
+      background: #e0b35420;
       font-size: 0.7rem;
-      color: #a3815f;
-      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 40px;
+      color: #8b2c1d;
+      font-weight: 500;
     }
-    .info-value {
+
+    /* quantity selector with weight options */
+    .weight-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-end;
+      margin-bottom: 24px;
+    }
+
+    .weight-card {
+      flex: 1;
+      min-width: 140px;
+      background: #fff6ed;
+      border-radius: 20px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+      text-align: center;
+    }
+
+    .weight-card.selected {
+      border-color: #e0b354;
+      background: #fff0e0;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+    }
+
+    .weight-name {
+      font-weight: 800;
       font-size: 1.2rem;
-      font-weight: 700;
-      color: #2c1d13;
+      color: #5c2a1e;
     }
-    .quantity-editor {
+
+    .weight-price {
+      color: #b1624b;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .weight-desc {
+      font-size: 0.7rem;
+      color: #a0775b;
+    }
+
+    .quantity-controls {
       display: flex;
       align-items: center;
-      gap: 12px;
-      background: #f3ede6;
-      padding: 6px 12px;
-      border-radius: 60px;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed #ebd5c0;
     }
+
     .qty-btn {
       background: white;
       border: none;
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
+      font-weight: bold;
       cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       color: #8b2c1d;
+      transition: 0.1s;
     }
+
     .qty-number {
-      font-size: 1.3rem;
-      font-weight: 700;
-      min-width: 40px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      min-width: 50px;
       text-align: center;
+      color: #2c1d13;
     }
+
+    .amount-row {
+      margin-top: 20px;
+      background: #f9f1e8;
+      padding: 12px 16px;
+      border-radius: 28px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    /* other items */
     .other-items-section {
       background: #ffffff;
       border-radius: 20px;
+      padding: 0.5rem 0;
       margin: 1.5rem 0;
       border-top: 2px dashed #eedbcb;
       border-bottom: 2px dashed #eedbcb;
-      padding: 1rem 0;
     }
+
     .section-caption {
       display: flex;
       justify-content: space-between;
+      align-items: baseline;
       margin-bottom: 1rem;
       flex-wrap: wrap;
     }
+
+    .section-caption h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #7b3f2c;
+    }
+
     .add-item-btn {
       background: #e0b354;
       border: none;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 50px;
       font-weight: bold;
+      color: #2d1a12;
       cursor: pointer;
     }
+
     .items-table {
       width: 100%;
       border-collapse: collapse;
     }
+
     .items-table th, .items-table td {
       text-align: left;
-      padding: 10px 6px;
+      padding: 12px 6px;
       border-bottom: 1px solid #f0e2d0;
     }
+
+    .items-table th {
+      color: #a57250;
+      font-weight: 600;
+    }
+
     .item-name-input {
       background: #fef7ef;
       border: 1px solid #e9daca;
-      padding: 6px 10px;
+      padding: 8px 12px;
       border-radius: 28px;
-      width: 140px;
+      width: 150px;
     }
+
     .qty-edit-control {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
+
     .mini-qty-btn {
       background: #f2e4d8;
       border: none;
       width: 28px;
       height: 28px;
       border-radius: 30px;
+      font-weight: bold;
       cursor: pointer;
     }
+
     .item-price-input {
-      width: 90px;
+      width: 95px;
       background: #fef7ef;
       border: 1px solid #e9daca;
       padding: 6px 8px;
       border-radius: 28px;
     }
+
     .delete-item {
       background: none;
       border: none;
       font-size: 1.2rem;
       cursor: pointer;
-      color: #b1624b;
     }
+
+    /* totals */
     .totals-area {
       background: #fcf8f0;
       border-radius: 24px;
       padding: 1.2rem 1.5rem;
-      margin: 1.5rem 0;
+      margin: 1.8rem 0;
     }
+
     .totals-row {
       display: flex;
       justify-content: space-between;
+      font-size: 1rem;
       padding: 8px 0;
     }
+
     .grand-total {
       font-weight: 800;
       font-size: 1.5rem;
@@ -214,6 +316,8 @@
       margin-top: 8px;
       padding-top: 12px;
     }
+
+    /* QR + payment */
     .payment-row {
       display: flex;
       flex-wrap: wrap;
@@ -223,40 +327,46 @@
       background: #fefaf2;
       border-radius: 28px;
       padding: 1rem 1.8rem;
+      margin-top: 1rem;
     }
+
     .qr-box {
       text-align: center;
       background: white;
       padding: 10px;
-      border-radius: 20px;
+      border-radius: 24px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
+
     .qr-img {
-      width: 120px;
-      height: 120px;
+      width: 110px;
+      height: 110px;
       object-fit: contain;
     }
+
     .qr-text {
       font-size: 0.7rem;
       color: #865d41;
       margin-top: 5px;
     }
+
     .btn-print, .btn-reset {
-      padding: 8px 20px;
+      background: transparent;
+      border: 1px solid #cdb191;
+      padding: 8px 24px;
       border-radius: 40px;
       font-weight: 600;
       cursor: pointer;
       margin-top: 1rem;
       margin-right: 10px;
     }
+
     .btn-print {
       background: #8b2c1d;
       color: white;
       border: none;
     }
-    .btn-reset {
-      background: transparent;
-      border: 1px solid #cdb191;
-    }
+
     footer {
       background: #f3ede6;
       text-align: center;
@@ -264,8 +374,9 @@
       font-size: 0.7rem;
       color: #7a5a40;
     }
-    @media (max-width: 650px) {
-      .product-details, .info-group {
+
+    @media (max-width: 680px) {
+      .weight-selector {
         flex-direction: column;
       }
       .payment-row {
@@ -277,95 +388,128 @@
 </head>
 <body>
 <div class="bill-container" id="billApp">
+  <!-- header with dynamic logo support -->
   <div class="brand-header">
     <div class="logo-area">
-      <!-- YOUR LOGO IMAGE - Replace 'logo.png' with your actual file name -->
-      <img :src="logoImage" class="logo-img" alt="Vivaan Logo" @error="useDefaultLogo">
+      <img :src="logoImage" class="logo-img" alt="Vivaan Logo" @error="useDefaultLogoPlaceholder">
       <div class="brand-text">
         <h1>VIVAAN Signature</h1>
         <p>PURE SPICES · DISTINCTIVE DINING</p>
       </div>
     </div>
-    <div class="signature-badge">✨ शाही कोल्हापुरी ✨</div>
+    <div class="signature-badge">✨ शाही कोल्हापुरी मसाला ✨</div>
   </div>
 
   <div class="bill-body">
+    <!-- Shahi Kolhapuri Masala section with weight options: 1kg, 1/2kg, Pavsher -->
     <div class="product-section">
-      <div class="product-title">🌶️ SHAHI KOLHAPURI MASALA | 100% Pure · 1 Kg</div>
-      <div class="product-details">
-        <div class="info-group">
-          <div class="info-item">
-            <div class="info-label">Quantity (Kg)</div>
-            <div class="info-value">
-              <div class="quantity-editor">
-                <button class="qty-btn" @click="changeMainQty(-1)">−</button>
-                <span class="qty-number">{{ mainProduct.qty }}</span>
-                <button class="qty-btn" @click="changeMainQty(1)">+</button>
-              </div>
-            </div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">Price per Kg</div>
-            <div class="info-value">₹ {{ mainProduct.pricePerUnit }}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">Amount</div>
-            <div class="info-value">₹ {{ mainProduct.total }}</div>
-          </div>
+      <div class="product-title">
+        🌶️ SHAHI KOLHAPURI MASALA 
+        <span class="badge-pure">100% Pure · Authentic Kolhapuri</span>
+      </div>
+
+      <!-- Weight selection cards -->
+      <div class="weight-selector">
+        <div class="weight-card" :class="{ selected: selectedWeight === 'full' }" @click="selectWeight('full')">
+          <div class="weight-name">1 Kg</div>
+          <div class="weight-price">₹800</div>
+          <div class="weight-desc">(Family Pack)</div>
         </div>
+        <div class="weight-card" :class="{ selected: selectedWeight === 'half' }" @click="selectWeight('half')">
+          <div class="weight-name">½ Kg</div>
+          <div class="weight-price">₹400</div>
+          <div class="weight-desc">(500g)</div>
+        </div>
+        <div class="weight-card" :class="{ selected: selectedWeight === 'pavsher' }" @click="selectWeight('pavsher')">
+          <div class="weight-name">Pavsher</div>
+          <div class="weight-price">₹200</div>
+          <div class="weight-desc">(250g / Quarter kg)</div>
+        </div>
+      </div>
+
+      <!-- Quantity multiplier (multiple packs) -->
+      <div class="quantity-controls">
+        <button class="qty-btn" @click="changeQuantity(-1)">−</button>
+        <span class="qty-number">{{ mainQty }} × {{ weightLabel }}</span>
+        <button class="qty-btn" @click="changeQuantity(1)">+</button>
+      </div>
+
+      <!-- Dynamic amount display -->
+      <div class="amount-row">
+        <span>Total Masala Amount</span>
+        <span style="font-size:1.4rem;">₹{{ mainProductTotal }}</span>
       </div>
     </div>
 
+    <!-- Additional editable items -->
     <div class="other-items-section">
       <div class="section-caption">
-        <h3>📝 Additional Items</h3>
+        <h3>📝 Additional Products / Items</h3>
         <button class="add-item-btn" @click="addNewItem">+ Add Item</button>
       </div>
       <table class="items-table">
-        <thead><tr><th>Item</th><th>Qty</th><th>Price (₹)</th><th>Total</th><th></th></tr></thead>
+        <thead>
+          <tr><th>Item name</th><th>Quantity</th><th>Unit Price (₹)</th><th>Total</th><th style="width:40px"></th></tr>
+        </thead>
         <tbody>
           <tr v-for="(item, idx) in extraItems" :key="idx">
-            <td><input class="item-name-input" v-model="item.name"></td>
+            <td><input type="text" class="item-name-input" v-model="item.name" placeholder="e.g., Spice blend"></td>
             <td>
               <div class="qty-edit-control">
                 <button class="mini-qty-btn" @click="updateExtraQty(idx, -1)">−</button>
-                <span>{{ item.qty }}</span>
+                <span style="min-width: 32px; text-align:center;">{{ item.qty }}</span>
                 <button class="mini-qty-btn" @click="updateExtraQty(idx, 1)">+</button>
               </div>
             </td>
-            <td><input type="number" class="item-price-input" v-model.number="item.price"></td>
-            <td>₹ {{ item.qty * item.price }}</td>
+            <td><input type="number" step="5" class="item-price-input" v-model.number="item.price" @change="recalc"></td>
+            <td style="font-weight:600;">₹{{ item.qty * item.price }}</td>
             <td><button class="delete-item" @click="removeExtraItem(idx)">🗑️</button></td>
           </tr>
-          <tr v-if="extraItems.length === 0"><td colspan="5" style="text-align:center;">No items — click Add Item</td></tr>
+          <tr v-if="extraItems.length === 0">
+            <td colspan="5" style="text-align:center; padding:1rem;">✨ No extra items. Click "Add Item" for other products ✨</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
+    <!-- Totals -->
     <div class="totals-area">
-      <div class="totals-row"><span>Shahi Kolhapuri Masala</span><span>₹{{ mainProduct.total }}</span></div>
-      <div class="totals-row" v-if="extraTotal > 0"><span>Additional Items</span><span>₹{{ extraTotal }}</span></div>
-      <div class="totals-row grand-total"><span>GRAND TOTAL</span><span>₹{{ grandTotal }}</span></div>
+      <div class="totals-row">
+        <span>Shahi Kolhapuri Masala ({{ weightLabel }} x {{ mainQty }})</span>
+        <span>₹{{ mainProductTotal }}</span>
+      </div>
+      <div class="totals-row" v-if="extraTotal > 0">
+        <span>Additional items total</span>
+        <span>₹{{ extraTotal }}</span>
+      </div>
+      <div class="totals-row grand-total">
+        <span>GRAND TOTAL</span>
+        <span>₹{{ grandTotal }}</span>
+      </div>
     </div>
 
+    <!-- QR + UPI Payment (Dynamic amount) -->
     <div class="payment-row">
       <div class="qr-box">
-        <!-- YOUR QR CODE IMAGE - Replace 'qrcode.png' with your actual file name -->
-        <img :src="qrImage" class="qr-img" alt="UPI QR Code" @error="useDefaultQR">
+        <img :src="qrImage" class="qr-img" alt="UPI QR Code" @error="useDefaultQRPlaceholder">
         <div class="qr-text">Scan to pay with any UPI app</div>
+        <small style="color:#b58154;">Vivaan@Signature</small>
       </div>
       <div style="text-align:right">
-        <p><strong>📱 UPI Payment</strong><br>Amount: <strong>₹{{ grandTotal }}</strong></p>
-        <small>VIVAAN Signature · Kolhapuri Special</small>
+        <p style="font-weight:bold;">📱 UPI / QR Payment</p>
+        <p style="font-size:0.9rem;">Scan code using PhonePe, GPay, Paytm<br>Amount: <strong>₹{{ grandTotal }}</strong></p>
+        <small style="font-size:0.7rem;">शाही कोल्हापुरी मसाला · Pure Spices</small>
       </div>
     </div>
 
-    <div>
-      <button class="btn-reset" @click="resetBill">Reset</button>
-      <button class="btn-print" @click="printBill">🖨️ Print Bill</button>
+    <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px;">
+      <button class="btn-reset" @click="resetFullBill">Reset Bill</button>
+      <button class="btn-print" @click="printBill">🖨️ Print Bill / Receipt</button>
     </div>
   </div>
-  <footer>VIVAAN Signature | Pure Spices & Distinctive Dining | Thank you! Visit again</footer>
+  <footer>
+    VIVAAN Signature | Pure Spices & Distinctive Dining | कोल्हापुरी मसाला — Authentic Taste Since 1982
+  </footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
@@ -373,107 +517,195 @@
   new Vue({
     el: '#billApp',
     data: {
-      // === CHANGE THESE TO YOUR IMAGE FILE NAMES ===
-      logoImage: 'logo.png',      // Put your logo file here (same folder)
-      qrImage: 'qrcode.png',      // Put your QR code image here (same folder)
-      // ============================================
+      // Logo & QR images - replace with your actual filenames (or keep default placeholder)
+      logoImage: 'logo.png',       // change to your logo file name
+      qrImage: 'qrcode.png',       // change to your QR image file name
       
-      mainProduct: {
-        qty: 1,
-        pricePerUnit: 320,
-        total: 320
-      },
+      // Masala weight selection: 'full' (1kg=800), 'half' (500g=400), 'pavsher' (250g=200)
+      selectedWeight: 'full',      // full = 1kg, half = 1/2kg, pavsher = 250g
+      mainQty: 1,                  // quantity multiplier (number of packs)
+      
+      // Extra items array (dynamic)
       extraItems: [
-        { name: "Pure Turmeric Powder", qty: 2, price: 85 },
-        { name: "Garam Masala", qty: 1, price: 120 }
+        { name: "Pure Turmeric Powder", qty: 1, price: 85 },
+        { name: "Special Garam Masala", qty: 1, price: 120 }
       ]
     },
     computed: {
+      // Weight details based on selection
+      weightPrice() {
+        if (this.selectedWeight === 'full') return 800;
+        if (this.selectedWeight === 'half') return 400;
+        return 200;  // pavsher
+      },
+      weightLabel() {
+        if (this.selectedWeight === 'full') return '1 Kg';
+        if (this.selectedWeight === 'half') return '½ Kg';
+        return 'Pavsher (250g)';
+      },
+      mainProductTotal() {
+        return this.mainQty * this.weightPrice;
+      },
       extraTotal() {
         let sum = 0;
         this.extraItems.forEach(item => {
-          sum += item.qty * item.price;
+          sum += (item.qty * item.price);
         });
         return sum;
       },
       grandTotal() {
-        this.mainProduct.total = this.mainProduct.qty * this.mainProduct.pricePerUnit;
-        return this.mainProduct.total + this.extraTotal;
+        return this.mainProductTotal + this.extraTotal;
       }
     },
+    watch: {
+      grandTotal() {
+        // optional: any side effect (like updating QR text)
+      }
+    },
+    mounted() {
+      // if images not found, fallback handled automatically
+    },
     methods: {
-      changeMainQty(delta) {
-        let newQty = this.mainProduct.qty + delta;
-        if (newQty >= 0.5) this.mainProduct.qty = parseFloat(newQty.toFixed(1));
-        if (this.mainProduct.qty < 0) this.mainProduct.qty = 0;
+      selectWeight(weightType) {
+        this.selectedWeight = weightType;
+        // maintain quantity >0
+        if (this.mainQty < 1) this.mainQty = 1;
+      },
+      changeQuantity(delta) {
+        let newQty = this.mainQty + delta;
+        if (newQty >= 1) {
+          this.mainQty = newQty;
+        } else {
+          this.mainQty = 1;
+        }
       },
       updateExtraQty(idx, delta) {
         let newVal = this.extraItems[idx].qty + delta;
-        if (newVal < 0) newVal = 0;
+        if (newVal < 1) newVal = 1;
         this.extraItems[idx].qty = newVal;
       },
       addNewItem() {
-        this.extraItems.push({ name: "New Item", qty: 1, price: 50 });
+        this.extraItems.push({
+          name: "New Item",
+          qty: 1,
+          price: 50
+        });
       },
       removeExtraItem(idx) {
         this.extraItems.splice(idx, 1);
       },
-      resetBill() {
-        this.mainProduct.qty = 1;
+      recalc() {
+        // force re-compute (vue reactivity automatic)
+      },
+      resetFullBill() {
+        this.selectedWeight = 'full';
+        this.mainQty = 1;
         this.extraItems = [
-          { name: "Pure Turmeric Powder", qty: 2, price: 85 },
-          { name: "Garam Masala", qty: 1, price: 120 }
+          { name: "Pure Turmeric Powder", qty: 1, price: 85 },
+          { name: "Special Garam Masala", qty: 1, price: 120 }
         ];
       },
-      useDefaultLogo() {
-        // If logo fails to load, show text instead
-        this.logoImage = '';
-        const logoArea = document.querySelector('.logo-img');
-        if(logoArea) logoArea.style.display = 'none';
+      // Fallback if logo or QR image not found
+      useDefaultLogoPlaceholder(event) {
+        const img = event.target;
+        img.style.display = 'none';
+        // optional: show text instead
+        const parent = img.parentElement;
+        if (parent && !parent.querySelector('.logo-fallback')) {
+          const fallback = document.createElement('div');
+          fallback.innerText = 'VS';
+          fallback.style.background = '#f9e0a0';
+          fallback.style.width = '60px';
+          fallback.style.height = '60px';
+          fallback.style.borderRadius = '50%';
+          fallback.style.display = 'flex';
+          fallback.style.alignItems = 'center';
+          fallback.style.justifyContent = 'center';
+          fallback.style.fontWeight = 'bold';
+          fallback.style.fontSize = '1.5rem';
+          fallback.style.color = '#8b2c1d';
+          fallback.className = 'logo-fallback';
+          parent.appendChild(fallback);
+        }
       },
-      useDefaultQR() {
-        // If QR fails to load, show placeholder text
-        this.qrImage = '';
-        const qrBox = document.querySelector('.qr-box');
-        if(qrBox && !document.querySelector('.qr-fallback')) {
+      useDefaultQRPlaceholder(event) {
+        const img = event.target;
+        img.style.display = 'none';
+        const container = img.parentElement;
+        if (container && !container.querySelector('.qr-fallback')) {
           const fallback = document.createElement('div');
           fallback.className = 'qr-fallback';
-          fallback.innerHTML = '⬛ UPI QR ⬛<br>vivaan@signature';
+          fallback.innerHTML = '⬛ UPI QR ⬛<br>vivaan@signature<br>Scan any UPI';
           fallback.style.fontSize = '10px';
           fallback.style.padding = '10px';
-          qrBox.appendChild(fallback);
+          fallback.style.background = '#f5f0e8';
+          fallback.style.borderRadius = '12px';
+          fallback.style.marginTop = '5px';
+          container.appendChild(fallback);
         }
       },
       printBill() {
-        let win = window.open('', '_blank');
+        let printWindow = window.open('', '_blank');
         let extraRows = '';
         this.extraItems.forEach(it => {
-          extraRows += `<tr><td>${it.name}</td><td>${it.qty}</td><td>₹${it.price}</td><td>₹${it.qty * it.price}</td></tr>`;
+          extraRows += `<tr>
+            <td>${this.escapeHtml(it.name)}</td>
+            <td>${it.qty}</td>
+            <td>₹${it.price}</td>
+            <td>₹${it.qty * it.price}</td>
+          </tr>`;
         });
-        win.document.write(`
-          <html><head><title>Vivaan Bill</title>
+        let weightDisplay = this.weightLabel;
+        let ratePerUnit = this.weightPrice;
+        let masalaLine = `${weightDisplay} × ${this.mainQty} = ₹${this.mainProductTotal} (₹${ratePerUnit}/${weightDisplay})`;
+        
+        printWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head><title>Vivaan Signature - Bill</title>
           <style>
-            body { font-family: sans-serif; padding: 20px; }
-            .header { text-align: center; border-bottom: 2px solid #8b2c1d; }
+            body { font-family: 'Segoe UI', sans-serif; padding: 2rem; max-width: 700px; margin: auto; background: white; }
+            .header { text-align: center; border-bottom: 2px solid #b56a3c; margin-bottom: 20px; }
+            .logo-text { font-size: 1.8rem; font-weight: bold; color: #8b2c1d; }
+            .sub { color: #a3815f; }
+            .item-row { margin: 12px 0; }
             table { width: 100%; border-collapse: collapse; margin: 15px 0; }
             th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-            .total { font-size: 1.3rem; font-weight: bold; margin-top: 15px; }
+            .grand { font-size: 1.4rem; font-weight: bold; color: #8b2c1d; margin-top: 20px; border-top: 2px solid #e0b354; padding-top: 10px; }
+            .footer { text-align: center; margin-top: 30px; font-size: 10px; color: gray; }
+            .qr-info { margin-top: 20px; text-align: center; background: #f9f1e8; padding: 12px; border-radius: 16px; }
           </style>
           </head>
           <body>
           <div class="header">
-            <h2>VIVAAN Signature</h2>
-            <p>Pure Spices · Distinctive Dining</p>
+            <div class="logo-text">VIVAAN Signature</div>
+            <div class="sub">Pure Spices · Distinctive Dining</div>
+            <p>शाही कोल्हापुरी मसाला | Authentic Kolhapuri Taste</p>
           </div>
-          <h3>Shahi Kolhapuri Masala x ${this.mainProduct.qty} Kg = ₹${this.mainProduct.qty * this.mainProduct.pricePerUnit}</h3>
-          ${this.extraItems.length ? '<h4>Additional Items</h4><table><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>' + extraRows + '</table>' : ''}
-          <div class="total">Grand Total: ₹${this.grandTotal}</div>
-          <p>UPI: vivaan@signature | Amount: ₹${this.grandTotal}</p>
-          <p style="margin-top:30px;">Thank you! Visit again</p>
-          </body></html>
+          <h3>Order Summary</h3>
+          <div class="item-row"><strong>Shahi Kolhapuri Masala</strong><br>${masalaLine}</div>
+          ${this.extraItems.length ? '<h4>Additional Items</h4><table><thead><tr><th>Item</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr></thead><tbody>' + extraRows + '</tbody></table>' : '<p>No additional items</p>'}
+          <div class="grand">GRAND TOTAL: ₹${this.grandTotal}</div>
+          <div class="qr-info">
+            <strong>📱 UPI Payment</strong><br>
+            Scan QR Code with any UPI App (PhonePe, GPay, Paytm)<br>
+            Amount: ₹${this.grandTotal} | VPA: vivaan@signature
+          </div>
+          <div class="footer">Thank you! Visit again · Vivaan Signature - Pure Spices, Distinctive Dining</div>
+          </body>
+          </html>
         `);
-        win.document.close();
-        win.print();
+        printWindow.document.close();
+        printWindow.print();
+      },
+      escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+          if (m === '&') return '&amp;';
+          if (m === '<') return '&lt;';
+          if (m === '>') return '&gt;';
+          return m;
+        });
       }
     }
   });
