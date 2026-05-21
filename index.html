@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivaan Signature | Bill System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background: #f3efe7;
+      padding: 2rem 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .bill-container {
+      max-width: 860px;
+      width: 100%;
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .brand-header {
+      background: #8b2c1d;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo-img {
+      height: 60px;
+      width: auto;
+      max-width: 120px;
+      object-fit: contain;
+      background: white;
+      border-radius: 12px;
+      padding: 5px;
+    }
+    .brand-text h1 {
+      font-size: 1.8rem;
+      color: #ffefcf;
+    }
+    .brand-text p {
+      color: #fad98b;
+      font-size: 0.8rem;
+    }
+    .signature-badge {
+      background: #e6c38a;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      color: #4a251b;
+      font-weight: bold;
+    }
+    .bill-body {
+      padding: 2rem;
+    }
+    .product-section {
+      background: #fefaf5;
+      border-radius: 24px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid #f0e2d0;
+    }
+    .product-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #5c2a1e;
+      border-left: 5px solid #e0b354;
+      padding-left: 12px;
+      margin-bottom: 1rem;
+    }
+    .product-details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+    .info-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      flex: 2;
+    }
+    .info-label {
+      font-size: 0.7rem;
+      color: #a3815f;
+      font-weight: 600;
+    }
+    .info-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #2c1d13;
+    }
+    .quantity-editor {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f3ede6;
+      padding: 6px 12px;
+      border-radius: 60px;
+    }
+    .qty-btn {
+      background: white;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: #8b2c1d;
+    }
+    .qty-number {
+      font-size: 1.3rem;
+      font-weight: 700;
+      min-width: 40px;
+      text-align: center;
+    }
+    .other-items-section {
+      background: #ffffff;
+      border-radius: 20px;
+      margin: 1.5rem 0;
+      border-top: 2px dashed #eedbcb;
+      border-bottom: 2px dashed #eedbcb;
+      padding: 1rem 0;
+    }
+    .section-caption {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .add-item-btn {
+      background: #e0b354;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .items-table th, .items-table td {
+      text-align: left;
+      padding: 10px 6px;
+      border-bottom: 1px solid #f0e2d0;
+    }
+    .item-name-input {
+      background: #fef7ef;
+      border: 1px solid #e9daca;
+      padding: 6px 10px;
+      border-radius: 28px;
+      width: 140px;
+    }
+    .qty-edit-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mini-qty-btn {
+      background: #f2e4d8;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    .item-price-input {
+      width: 90px;
+      background: #fef7ef;
+      border: 1px solid #e9daca;
+      padding: 6px 8px;
+      border-radius: 28px;
+    }
+    .delete-item {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #b1624b;
+    }
+    .totals-area {
+      background: #fcf8f0;
+      border-radius: 24px;
+      padding: 1.2rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .totals-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+    }
+    .grand-total {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #8b2c1d;
+      border-top: 2px solid #e0b354;
+      margin-top: 8px;
+      padding-top: 12px;
+    }
+    .payment-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+      justify-content: space-between;
+      background: #fefaf2;
+      border-radius: 28px;
+      padding: 1rem 1.8rem;
+    }
+    .qr-box {
+      text-align: center;
+      background: white;
+      padding: 10px;
+      border-radius: 20px;
+    }
+    .qr-img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+    }
+    .qr-text {
+      font-size: 0.7rem;
+      color: #865d41;
+      margin-top: 5px;
+    }
+    .btn-print, .btn-reset {
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+      margin-right: 10px;
+    }
+    .btn-print {
+      background: #8b2c1d;
+      color: white;
+      border: none;
+    }
+    .btn-reset {
+      background: transparent;
+      border: 1px solid #cdb191;
+    }
+    footer {
+      background: #f3ede6;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.7rem;
+      color: #7a5a40;
+    }
+    @media (max-width: 650px) {
+      .product-details, .info-group {
+        flex-direction: column;
+      }
+      .payment-row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="bill-container" id="billApp">
+  <div class="brand-header">
+    <div class="logo-area">
+      <!-- YOUR LOGO IMAGE - Replace 'logo.png' with your actual file name -->
+      <img :src="logoImage" class="logo-img" alt="Vivaan Logo" @error="useDefaultLogo">
+      <div class="brand-text">
+        <h1>VIVAAN Signature</h1>
+        <p>PURE SPICES · DISTINCTIVE DINING</p>
+      </div>
+    </div>
+    <div class="signature-badge">✨ शाही कोल्हापुरी ✨</div>
+  </div>
+
+  <div class="bill-body">
+    <div class="product-section">
+      <div class="product-title">🌶️ SHAHI KOLHAPURI MASALA | 100% Pure · 1 Kg</div>
+      <div class="product-details">
+        <div class="info-group">
+          <div class="info-item">
+            <div class="info-label">Quantity (Kg)</div>
+            <div class="info-value">
+              <div class="quantity-editor">
+                <button class="qty-btn" @click="changeMainQty(-1)">−</button>
+                <span class="qty-number">{{ mainProduct.qty }}</span>
+                <button class="qty-btn" @click="changeMainQty(1)">+</button>
+              </div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Price per Kg</div>
+            <div class="info-value">₹ {{ mainProduct.pricePerUnit }}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Amount</div>
+            <div class="info-value">₹ {{ mainProduct.total }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="other-items-section">
+      <div class="section-caption">
+        <h3>📝 Additional Items</h3>
+        <button class="add-item-btn" @click="addNewItem">+ Add Item</button>
+      </div>
+      <table class="items-table">
+        <thead><tr><th>Item</th><th>Qty</th><th>Price (₹)</th><th>Total</th><th></th></tr></thead>
+        <tbody>
+          <tr v-for="(item, idx) in extraItems" :key="idx">
+            <td><input class="item-name-input" v-model="item.name"></td>
+            <td>
+              <div class="qty-edit-control">
+                <button class="mini-qty-btn" @click="updateExtraQty(idx, -1)">−</button>
+                <span>{{ item.qty }}</span>
+                <button class="mini-qty-btn" @click="updateExtraQty(idx, 1)">+</button>
+              </div>
+            </td>
+            <td><input type="number" class="item-price-input" v-model.number="item.price"></td>
+            <td>₹ {{ item.qty * item.price }}</td>
+            <td><button class="delete-item" @click="removeExtraItem(idx)">🗑️</button></td>
+          </tr>
+          <tr v-if="extraItems.length === 0"><td colspan="5" style="text-align:center;">No items — click Add Item</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="totals-area">
+      <div class="totals-row"><span>Shahi Kolhapuri Masala</span><span>₹{{ mainProduct.total }}</span></div>
+      <div class="totals-row" v-if="extraTotal > 0"><span>Additional Items</span><span>₹{{ extraTotal }}</span></div>
+      <div class="totals-row grand-total"><span>GRAND TOTAL</span><span>₹{{ grandTotal }}</span></div>
+    </div>
+
+    <div class="payment-row">
+      <div class="qr-box">
+        <!-- YOUR QR CODE IMAGE - Replace 'qrcode.png' with your actual file name -->
+        <img :src="qrImage" class="qr-img" alt="UPI QR Code" @error="useDefaultQR">
+        <div class="qr-text">Scan to pay with any UPI app</div>
+      </div>
+      <div style="text-align:right">
+        <p><strong>📱 UPI Payment</strong><br>Amount: <strong>₹{{ grandTotal }}</strong></p>
+        <small>VIVAAN Signature · Kolhapuri Special</small>
+      </div>
+    </div>
+
+    <div>
+      <button class="btn-reset" @click="resetBill">Reset</button>
+      <button class="btn-print" @click="printBill">🖨️ Print Bill</button>
+    </div>
+  </div>
+  <footer>VIVAAN Signature | Pure Spices & Distinctive Dining | Thank you! Visit again</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<script>
+  new Vue({
+    el: '#billApp',
+    data: {
+      // === CHANGE THESE TO YOUR IMAGE FILE NAMES ===
+      logoImage: 'logo.png',      // Put your logo file here (same folder)
+      qrImage: 'qrcode.png',      // Put your QR code image here (same folder)
+      // ============================================
+      
+      mainProduct: {
+        qty: 1,
+        pricePerUnit: 320,
+        total: 320
+      },
+      extraItems: [
+        { name: "Pure Turmeric Powder", qty: 2, price: 85 },
+        { name: "Garam Masala", qty: 1, price: 120 }
+      ]
+    },
+    computed: {
+      extraTotal() {
+        let sum = 0;
+        this.extraItems.forEach(item => {
+          sum += item.qty * item.price;
+        });
+        return sum;
+      },
+      grandTotal() {
+        this.mainProduct.total = this.mainProduct.qty * this.mainProduct.pricePerUnit;
+        return this.mainProduct.total + this.extraTotal;
+      }
+    },
+    methods: {
+      changeMainQty(delta) {
+        let newQty = this.mainProduct.qty + delta;
+        if (newQty >= 0.5) this.mainProduct.qty = parseFloat(newQty.toFixed(1));
+        if (this.mainProduct.qty < 0) this.mainProduct.qty = 0;
+      },
+      updateExtraQty(idx, delta) {
+        let newVal = this.extraItems[idx].qty + delta;
+        if (newVal < 0) newVal = 0;
+        this.extraItems[idx].qty = newVal;
+      },
+      addNewItem() {
+        this.extraItems.push({ name: "New Item", qty: 1, price: 50 });
+      },
+      removeExtraItem(idx) {
+        this.extraItems.splice(idx, 1);
+      },
+      resetBill() {
+        this.mainProduct.qty = 1;
+        this.extraItems = [
+          { name: "Pure Turmeric Powder", qty: 2, price: 85 },
+          { name: "Garam Masala", qty: 1, price: 120 }
+        ];
+      },
+      useDefaultLogo() {
+        // If logo fails to load, show text instead
+        this.logoImage = '';
+        const logoArea = document.querySelector('.logo-img');
+        if(logoArea) logoArea.style.display = 'none';
+      },
+      useDefaultQR() {
+        // If QR fails to load, show placeholder text
+        this.qrImage = '';
+        const qrBox = document.querySelector('.qr-box');
+        if(qrBox && !document.querySelector('.qr-fallback')) {
+          const fallback = document.createElement('div');
+          fallback.className = 'qr-fallback';
+          fallback.innerHTML = '⬛ UPI QR ⬛<br>vivaan@signature';
+          fallback.style.fontSize = '10px';
+          fallback.style.padding = '10px';
+          qrBox.appendChild(fallback);
+        }
+      },
+      printBill() {
+        let win = window.open('', '_blank');
+        let extraRows = '';
+        this.extraItems.forEach(it => {
+          extraRows += `<tr><td>${it.name}</td><td>${it.qty}</td><td>₹${it.price}</td><td>₹${it.qty * it.price}</td></tr>`;
+        });
+        win.document.write(`
+          <html><head><title>Vivaan Bill</title>
+          <style>
+            body { font-family: sans-serif; padding: 20px; }
+            .header { text-align: center; border-bottom: 2px solid #8b2c1d; }
+            table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            .total { font-size: 1.3rem; font-weight: bold; margin-top: 15px; }
+          </style>
+          </head>
+          <body>
+          <div class="header">
+            <h2>VIVAAN Signature</h2>
+            <p>Pure Spices · Distinctive Dining</p>
+          </div>
+          <h3>Shahi Kolhapuri Masala x ${this.mainProduct.qty} Kg = ₹${this.mainProduct.qty * this.mainProduct.pricePerUnit}</h3>
+          ${this.extraItems.length ? '<h4>Additional Items</h4><table><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>' + extraRows + '</table>' : ''}
+          <div class="total">Grand Total: ₹${this.grandTotal}</div>
+          <p>UPI: vivaan@signature | Amount: ₹${this.grandTotal}</p>
+          <p style="margin-top:30px;">Thank you! Visit again</p>
+          </body></html>
+        `);
+        win.document.close();
+        win.print();
+      }
+    }
+  });
+</script>
+</body>
+</html>
